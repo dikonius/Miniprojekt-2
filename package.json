@@ -1,0 +1,22 @@
+{
+  "name": "miniprojekt-2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build-server": "tsc",
+    "start-server": "node dist/server.js"
+  },
+  "keywords": [],
+  "author": "Dmytro Koniushenko",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "express": "^5.1.0",
+    "typescript": "^5.9.2",
+    "zod": "^4.1.5"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3"
+  }
+}
