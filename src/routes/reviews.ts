@@ -6,7 +6,8 @@ import { type Review, reviewData } from '../data/reviewsList.js'
 const reviewRouter: Router = express.Router()
 
 const ReviewSchema = z.object({
-  id: z.string().min(1).max(50).regex(/^[a-zA-Z0-9åäöÅÄÖ :\-]+$/),
+  filmId: z.string().min(1).max(50).regex(/^[a-zA-Z0-9åäöÅÄÖ :,\-]+$/),
+  reviewId: z.string().min(1).max(50).regex(/^[a-zA-Z0-9åäöÅÄÖ :,\-]+$/),
   score: z.number().min(1).max(100),
   reviewer: z.string().min(1).max(50).regex(/^[a-zA-Z0-9åäöÅÄÖ :\-()]+$/)
 });
@@ -20,7 +21,7 @@ interface IdParam {
 }
 reviewRouter.get('/:id', (req: Request<IdParam>, res: Response<Review>) => {
 	const id: string = req.params.id
-	const maybeReview: Review | undefined = reviewData.find(review => review.id === id)
+	const maybeReview: Review | undefined = reviewData.find(review => review.reviewId === id)
 	// Två möjligheter: antingen finns filmen med "id" eller inte
 	if( maybeReview ) {
 		res.send(maybeReview)   // status 200 OK
@@ -43,7 +44,7 @@ reviewRouter.post('/', (req: Request<{}, void, Review>, res) => {
 
 reviewRouter.delete('/:id', (req: Request<IdParam>, res: Response<void>) => {
 	const id: string = req.params.id
-	const index = reviewData.findIndex(review => review.id === id)
+	const index = reviewData.findIndex(review => review.reviewId === id)
 
 	if( index !== -1 ) {
 		reviewData.splice(index, 1)
@@ -55,7 +56,7 @@ reviewRouter.delete('/:id', (req: Request<IdParam>, res: Response<void>) => {
 
 reviewRouter.put('/:id', (req: Request<IdParam, void, Review>, res) => {
   const id: string = req.params.id
-  const index = reviewData.findIndex(review => review.id === id)
+  const index = reviewData.findIndex(review => review.reviewId === id)
   if( index !== -1 ) {
     try {
 	  const newReview = ReviewSchema.parse(req.body) as Review
