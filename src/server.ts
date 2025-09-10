@@ -1,6 +1,7 @@
 import express from "express";
 import type { Express, RequestHandler } from "express";
 import filmRouter from "./routes/films.js";
+import reviewRouter from "./routes/reviews.js";
 
 const app: Express = express();
 const port = 1337; 
@@ -13,6 +14,7 @@ const logger: RequestHandler = (req, res, next) => {
 app.use("/", express.json()); 
 app.use("/", logger);
 app.use("/films", filmRouter);
+app.use("/reviews", reviewRouter);
 
 app.listen(port, () => {
   console.log(`Server is listening on port ${port}...`);
